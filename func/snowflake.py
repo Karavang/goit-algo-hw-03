@@ -10,20 +10,30 @@ def koch_curve(t, order, size):
             t.left(angle)
 
 
-def draw_koch_curve(order, size=300):
-    window = turtle.Screen()
-    window.bgcolor("white")
+def draw_koch_snowflake(order, size=300):
+    screen = turtle.Screen()
+    screen.bgcolor("white")
+    screen.title("Фрактал: Сніжинка Коха")
 
     t = turtle.Turtle()
     t.speed(0)
     t.penup()
-    t.goto(-size / 2, 0)
+    t.goto(-size / 2, size / 3)
     t.pendown()
 
-    koch_curve(t, order, size)
+    for _ in range(3):
+        koch_curve(t, order, size)
+        t.right(120)
 
-    window.mainloop()
+    t.hideturtle()
+    screen.mainloop()
 
 
-# Виклик функції
-draw_koch_curve(3)
+if __name__ == "__main__":
+    try:
+        level = int(input("Введіть рівень рекурсії (0 або більше): "))
+        if level < 0:
+            raise ValueError("Рівень рекурсії має бути невід'ємним числом.")
+        draw_koch_snowflake(level)
+    except ValueError as e:
+        print("Помилка:", e)
