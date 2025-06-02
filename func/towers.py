@@ -1,23 +1,12 @@
-from functools import lru_cache
-from typing import Dict, List
+def hanoi_towers(n: int, source: str, auxiliary: str, target: str) -> None:
+    if n > 0:
+        hanoi_towers(n-1, source, target, auxiliary)
+        print(f"Move disk {n} from {source} to {target}")
+        hanoi_towers(n-1, auxiliary, source, target)
 
-start: Dict[str, List[int]] = {'A': [3, 2, 1], 'B': [], 'C': []}
-
-@lru_cache(maxsize=None)
-def towers():
-    global start
-    if len(start['A']) != 0:
-        start['B'].append(start['A'][-1])
-        start['A'].pop()
-        print(start)
-        towers()
-    elif len(start['B']) != 0:
-        start['C'].append(start['B'][-1])
-        start['B'].pop()
-        print(start)
-        towers()
-    else: 
-        print(f'Алгоритм завершено. Остаточний стан: {start}')
+def main():
+    n = 3  
+    hanoi_towers(n, 'A', 'B', 'C')
 
 if __name__ == "__main__":
-    towers()
+    main()
